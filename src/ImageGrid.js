@@ -6,7 +6,6 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
-import tileData from './tileData';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,17 +43,48 @@ const useStyles = makeStyles(theme => ({
  */
  const tileData = [
    {
-     img: image,
+     img: 'https://picsum.photos/200',
      title: 'Image',
      author: 'author',
    },
+   {
+     img: 'https://picsum.photos/200',
+     title: 'Image',
+     author: 'author',
+   },
+   {
+     img: 'https://picsum.photos/200',
+     title: 'Image',
+     author: 'author',
+   },
+   {
+     img: 'https://picsum.photos/200',
+     title: 'Image',
+     author: 'author',
+   },
+   {
+     img: 'https://picsum.photos/200',
+     title: 'Image',
+     author: 'author',
+   },
+   {
+     img: 'https://picsum.photos/200',
+     title: 'Image',
+     author: 'author',
+   },
+   {
+     img: 'https://picsum.photos/200',
+     title: 'Image',
+     author: 'author',
+   },
+   
  ];
 export default function ImageGrid() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={180} className={classes.gridList}>
+      <GridList className={classes.gridList}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
           <ListSubheader component="div">December</ListSubheader>
         </GridListTile>
