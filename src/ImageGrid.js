@@ -42,6 +42,13 @@ const useStyles = makeStyles(theme => ({
  *   },
  * ];
  */
+ const tileData = [
+   {
+     img: image,
+     title: 'Image',
+     author: 'author',
+   },
+ ];
 export default function ImageGrid() {
   const classes = useStyles();
 
