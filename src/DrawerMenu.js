@@ -12,7 +12,11 @@ import MailIcon from "@material-ui/icons/Mail";
 
 const useStyles = makeStyles({
   drawer: {
-    width: "75%"
+    width: "75%",
+    
+    '&.MuiPaper-root.MuiDrawer-paper': {
+      width: "100%"
+    }
   }
 });
 
