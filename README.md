@@ -1,3 +1,8 @@
+"Failed to construct 'WebSocket'" webpackHotDevClient
+https://github.com/facebook/create-react-app/pull/8079#issuecomment-562373869
+`$ sed -i "62s/.*/    protocol: window.location.protocol === 'https:' ? 'wss' : 'ws',\/\/auto added line/" node_modules/react-dev-utils/webpackHotDevClient.js`
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
