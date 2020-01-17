@@ -21,6 +21,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import DrawerMenu from './DrawerMenu';
+import ImageGrid from './ImageGrid';
 
 const isIOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -157,26 +158,9 @@ export default function App() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <div>No chart here</div>
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid>
+
+          <ImageGrid />
+            
           <Box pt={4}>
             <Copyright />
           </Box>
