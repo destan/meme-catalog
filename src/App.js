@@ -62,6 +62,7 @@ const useStyles = makeStyles(theme => ({
   content: {
     // paddingTop: theme.spacing(4),
     // paddingBottom: theme.spacing(4)
+        width: '100%',
   }
 }));
 
@@ -75,7 +76,7 @@ export default function App() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
-    <Box display='flex'>
+    <Box display='flex' height='100%'>
       <CssBaseline />
       <AppBar
         position="absolute"
