@@ -38,6 +38,7 @@ export default function DrawerMenu() {
 
   return (
     <SwipeableDrawer
+      swipeAreaWidth={30}
       className={classes.drawer}
       open={open}
       onClose={toggleDrawer(false)}
