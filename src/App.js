@@ -39,17 +39,17 @@ function Copyright() {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // display: 'flex',
+    display: 'flex',
   },
   toolbar: {
     // paddingRight: 24, // keep right padding when drawer closed
   },
   toolbarIcon: {
-    // display: 'flex',
-    // alignItems: 'center',
-    // justifyContent: 'flex-end',
-    // padding: '0 8px',
-    // ...theme.mixins.toolbar,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
   },
   appBar: {
     // zIndex: theme.zIndex.drawer + 1,
@@ -151,7 +151,9 @@ export default function App() {
           </IconButton>
         </Toolbar>
       </AppBar>
+      
       <DrawerMenu />
+      
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
