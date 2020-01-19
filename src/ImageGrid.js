@@ -2,8 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import EE, {EVENT} from './EventEmitter';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,6 +13,10 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
   },
+  tile: {
+    height: 'auto !important',
+    padding: '1px !important',
+  }
 
 }));
 
@@ -71,8 +75,30 @@ const useStyles = makeStyles(theme => ({
    },
    
  ];
+
+function share(file) {
+  debugger
+  // if (navigator.canShare && navigator.canShare({ files: filesArray })) {
+  //   navigator.share({
+  //     files: filesArray,
+  //     title: 'Vacation Pictures',
+  //     text: 'Photos from September 27 to October 14.',
+  //   })
+  //       .then(() => console.log('Share was successful.'))
+  //       .catch((error) => console.log('Sharing failed', error));
+  // } else {
+  //   console.log(`Your system doesn't support sharing files.`);
+  // }
+}
+
 export default function ImageGrid() {
   const classes = useStyles();
+
+  const [files, setFiles] = React.useState([]);
+
+  React.useEffect(() => {
+    EE.on(EVENT.FILES_CHANGED,files => setFiles(files))
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -80,11 +106,13 @@ export default function ImageGrid() {
         <GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
           <ListSubheader component="div">Category or date</ListSubheader>
         </GridListTile>
-        {tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} style={{width: '100%', height: 'auto'}} />
+
+        {files.map(file => (
+          <GridListTile className={classes.tile} key={file.url} onClick={() => share(file)}>
+            <img src={file.url} alt={file.name} style={{width: '100%'}} />
           </GridListTile>
         ))}
+
       </GridList>
     </div>
   );

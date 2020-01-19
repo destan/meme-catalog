@@ -9,6 +9,11 @@ https://github.com/facebook/create-react-app/pull/8079#issuecomment-562373869
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+https://jsfiddle.net/destan/5cgnhm7b/
+
+https://github.com/john-doherty/long-press-event
+
 ## Available Scripts
 
 In the project directory, you can run:

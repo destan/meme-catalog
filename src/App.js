@@ -5,26 +5,17 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
-import Deposits from "./Deposits";
-import Orders from "./Orders";
 import DrawerMenu from "./DrawerMenu";
 import ImageGrid from "./ImageGrid";
-
-
-const isIOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+import Fab from '@material-ui/core/Fab';
+import CachedIcon from '@material-ui/icons/Cached';
+import EE, {EVENT} from './EventEmitter';
 
 function Copyright() {
   return (
@@ -40,9 +31,6 @@ function Copyright() {
 }
 
 const useStyles = makeStyles(theme => ({
-  toolbar: {
-    // paddingRight: 24, // keep right padding when drawer closed
-  },
   toolbarIcon: {
     display: "flex",
     alignItems: "center",
@@ -57,37 +45,68 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     height: "100vh",
-    overflow: "auto"
+    overflow: "auto",
+    width: '100%',
   },
-  content: {
-    // paddingTop: theme.spacing(4),
-    // paddingBottom: theme.spacing(4)
-        width: '100%',
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(3),
+    right: theme.spacing(3),
   }
 }));
 
-export default function App() {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+function enrichFile(file) {
+  if (!file.type.startsWith('image/')){ return } //FIXME include videos
 
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  file.url = window.URL.createObjectURL(file);
+
+  const reader = new FileReader();
+  reader.onload = dataUrl => file.data = dataUrl;
+  reader.readAsDataURL(file);
+}
+
+async function chooseFolder() {
+
+  //FIXME check if window.chooseFileSystemEntries available if not force user to enable feature chrome://flags/#native-file-system-api
+
+  const files = [];
+
+  const options = {type: 'openDirectory'};
+  const fileHandle = await window.chooseFileSystemEntries(options);
+  const entries = await fileHandle.getEntries();
+  for await (const entry of entries) {
+
+    if (entry.isFile) {
+      const file = await entry.getFile();
+      enrichFile(file);
+      if (file.url) {// omit non image files
+        files.push(file);
+      }
+    }
+  }
+
+  EE.emit(EVENT.FILES_CHANGED, files);
+}
+
+export default function App() {
+
+  const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
 
   return (
     <Box display='flex' height='100%'>
       <CssBaseline />
       <AppBar
         position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
+        className={classes.appBar}
       >
-        <Toolbar className={classes.toolbar}>
+        <Toolbar>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={() => setOpen(true)}
           >
             <MenuIcon />
           </IconButton>
@@ -108,7 +127,11 @@ export default function App() {
         </Toolbar>
       </AppBar>
 
-      <DrawerMenu />
+      <DrawerMenu open={open} onToggle={isOpen => setOpen(isOpen)} />
+
+      <Fab color="primary" className={classes.fab} onClick={chooseFolder}>
+        <CachedIcon />
+      </Fab>
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
